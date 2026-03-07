@@ -1,0 +1,12 @@
+{
+  "name": "rmk-v1-role",
+  "vendorId": "0x4C4B",
+  "productId": "0x5300",
+  "lighting": "none",
+  "matrix": {"rows": 1, "cols": 1},
+  "layouts": {
+    "keymap": [
+      ["0,0"]
+    ]
+  }
+}

@@ -69,6 +69,26 @@ path = "src/central.rs"
 name = "peripheral"
 path = "src/peripheral.rs"
 
+[[bin]]
+name = "dongle-basic"
+path = "src/dongle_basic.rs"
+
+[[bin]]
+name = "dongle-zdd"
+path = "src/dongle_zdd.rs"
+
+[[bin]]
+name = "dongle-prospector"
+path = "src/dongle_prospector.rs"
+
+[[bin]]
+name = "scanner-prospector"
+path = "src/scanner_prospector.rs"
+
+[[bin]]
+name = "reset"
+path = "src/reset.rs"
+
 [profile.dev]
 codegen-units = 1      # better optimizations
 debug = true

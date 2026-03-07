@@ -4,80 +4,2056 @@ install_crate = { rustup_component_name = "llvm-tools" }
 [tasks.flip-link]
 install_crate = { crate_name = "flip-link", binary = "flip-link", test_arg = ["-h"] }
 
-[tasks.build]
-command = "cargo"
-args = ["build", "--release"]
-dependencies = ["install-llvm-tools", "flip-link"]
+[tasks.install-cargo-binutils]
+install_crate = { crate_name = "cargo-binutils", binary = "cargo", test_arg = ["objcopy", "--help"] }
 
-[tasks.objcopy-central]
-install_crate = { crate_name = "cargo-binutils", binary = "cargo", test_arg = [
-    "objcopy",
-    "--help",
-] }
+[tasks.install-hex-to-uf2]
+install_crate = { crate_name = "cargo-hex-to-uf2", binary = "cargo", test_arg = ["hex-to-uf2", "--help"] }
+
+[tasks.build-totem_left]
 command = "cargo"
 args = [
-    "objcopy",
-    "--release",
-    "--bin",
-    "central",
-    "--",
-    "-O",
-    "ihex",
-    "rmk-firmware-central.hex",
+  "build",
+  "--release",
+  "--bin",
+  "central",
 ]
-dependencies = ["build"]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
 
-[tasks.objcopy-peripheral]
-install_crate = { crate_name = "cargo-binutils", binary = "cargo", test_arg = [
-    "objcopy",
-    "--help",
-] }
+[tasks.objcopy-totem_left]
 command = "cargo"
 args = [
-    "objcopy",
-    "--release",
-    "--bin",
-    "peripheral",
-    "--",
-    "-O",
-    "ihex",
-    "rmk-firmware-peripheral.hex",
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "totem_left.hex",
 ]
-dependencies = ["build"]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-totem_left"]
 
-[tasks.uf2-central]
-install_crate = { crate_name = "cargo-hex-to-uf2", binary = "cargo", test_arg = [
-    "hex-to-uf2",
-    "--help",
-] }
+[tasks.uf2-totem_left]
 command = "cargo"
 args = [
-    "hex-to-uf2",
-    "--input-path",
-    "rmk-firmware-central.hex",
-    "--output-path",
-    "rmk-firmware-central.uf2",
-    "--family",
-    "nrf52840",
+  "hex-to-uf2",
+  "--input-path",
+  "totem_left.hex",
+  "--output-path",
+  "totem_left.uf2",
+  "--family",
+  "nrf52840",
 ]
-dependencies = ["objcopy-central"]
+dependencies = ["install-hex-to-uf2", "objcopy-totem_left"]
 
-[tasks.uf2-peripheral]
-install_crate = { crate_name = "cargo-hex-to-uf2", binary = "cargo", test_arg = [
-    "hex-to-uf2",
-    "--help",
-] }
+[tasks.build-totem_right]
 command = "cargo"
 args = [
-    "hex-to-uf2",
-    "--input-path",
-    "rmk-firmware-peripheral.hex",
-    "--output-path",
-    "rmk-firmware-peripheral.uf2",
-    "--family",
-    "nrf52840",
+  "build",
+  "--release",
+  "--bin",
+  "peripheral",
 ]
-dependencies = ["objcopy-peripheral"]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-totem_right]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "peripheral",
+  "--",
+  "-O",
+  "ihex",
+  "totem_right.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-totem_right"]
+
+[tasks.uf2-totem_right]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "totem_right.hex",
+  "--output-path",
+  "totem_right.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-totem_right"]
+
+[tasks.build-totem_left_w_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-totem_left_w_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "totem_left_w_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-totem_left_w_dongle"]
+
+[tasks.uf2-totem_left_w_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "totem_left_w_dongle.hex",
+  "--output-path",
+  "totem_left_w_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-totem_left_w_dongle"]
+
+[tasks.build-totem_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-basic",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+
+[tasks.objcopy-totem_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-basic",
+  "--",
+  "-O",
+  "ihex",
+  "totem_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-totem_dongle"]
+
+[tasks.uf2-totem_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "totem_dongle.hex",
+  "--output-path",
+  "totem_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-totem_dongle"]
+
+[tasks.build-totem_zdd_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+
+[tasks.objcopy-totem_zdd_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+  "--",
+  "-O",
+  "ihex",
+  "totem_zdd_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-totem_zdd_dongle"]
+
+[tasks.uf2-totem_zdd_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "totem_zdd_dongle.hex",
+  "--output-path",
+  "totem_zdd_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-totem_zdd_dongle"]
+
+[tasks.build-urchin_left]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-urchin_left]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "urchin_left.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-urchin_left"]
+
+[tasks.uf2-urchin_left]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "urchin_left.hex",
+  "--output-path",
+  "urchin_left.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-urchin_left"]
+
+[tasks.build-urchin_right]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "peripheral",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-urchin_right]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "peripheral",
+  "--",
+  "-O",
+  "ihex",
+  "urchin_right.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-urchin_right"]
+
+[tasks.uf2-urchin_right]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "urchin_right.hex",
+  "--output-path",
+  "urchin_right.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-urchin_right"]
+
+[tasks.build-urchin_left_w_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-urchin_left_w_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "urchin_left_w_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-urchin_left_w_dongle"]
+
+[tasks.uf2-urchin_left_w_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "urchin_left_w_dongle.hex",
+  "--output-path",
+  "urchin_left_w_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-urchin_left_w_dongle"]
+
+[tasks.build-urchin_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-basic",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+
+[tasks.objcopy-urchin_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-basic",
+  "--",
+  "-O",
+  "ihex",
+  "urchin_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-urchin_dongle"]
+
+[tasks.uf2-urchin_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "urchin_dongle.hex",
+  "--output-path",
+  "urchin_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-urchin_dongle"]
+
+[tasks.build-urchin_zdd_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+
+[tasks.objcopy-urchin_zdd_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+  "--",
+  "-O",
+  "ihex",
+  "urchin_zdd_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-urchin_zdd_dongle"]
+
+[tasks.uf2-urchin_zdd_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "urchin_zdd_dongle.hex",
+  "--output-path",
+  "urchin_zdd_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-urchin_zdd_dongle"]
+
+[tasks.build-corne_left]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-corne_left]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "corne_left.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-corne_left"]
+
+[tasks.uf2-corne_left]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "corne_left.hex",
+  "--output-path",
+  "corne_left.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-corne_left"]
+
+[tasks.build-corne_right]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "peripheral",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-corne_right]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "peripheral",
+  "--",
+  "-O",
+  "ihex",
+  "corne_right.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-corne_right"]
+
+[tasks.uf2-corne_right]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "corne_right.hex",
+  "--output-path",
+  "corne_right.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-corne_right"]
+
+[tasks.build-corne_left_w_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-corne_left_w_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "corne_left_w_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-corne_left_w_dongle"]
+
+[tasks.uf2-corne_left_w_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "corne_left_w_dongle.hex",
+  "--output-path",
+  "corne_left_w_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-corne_left_w_dongle"]
+
+[tasks.build-corne_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-basic",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+
+[tasks.objcopy-corne_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-basic",
+  "--",
+  "-O",
+  "ihex",
+  "corne_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-corne_dongle"]
+
+[tasks.uf2-corne_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "corne_dongle.hex",
+  "--output-path",
+  "corne_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-corne_dongle"]
+
+[tasks.build-corne_zdd_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+
+[tasks.objcopy-corne_zdd_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+  "--",
+  "-O",
+  "ihex",
+  "corne_zdd_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-corne_zdd_dongle"]
+
+[tasks.uf2-corne_zdd_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "corne_zdd_dongle.hex",
+  "--output-path",
+  "corne_zdd_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-corne_zdd_dongle"]
+
+[tasks.build-eyelash_corne_left]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-eyelash_corne_left]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_corne_left.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_corne_left"]
+
+[tasks.uf2-eyelash_corne_left]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_corne_left.hex",
+  "--output-path",
+  "eyelash_corne_left.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_corne_left"]
+
+[tasks.build-eyelash_corne_right]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "peripheral",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-eyelash_corne_right]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "peripheral",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_corne_right.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_corne_right"]
+
+[tasks.uf2-eyelash_corne_right]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_corne_right.hex",
+  "--output-path",
+  "eyelash_corne_right.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_corne_right"]
+
+[tasks.build-eyelash_corne_left_w_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-eyelash_corne_left_w_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_corne_left_w_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_corne_left_w_dongle"]
+
+[tasks.uf2-eyelash_corne_left_w_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_corne_left_w_dongle.hex",
+  "--output-path",
+  "eyelash_corne_left_w_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_corne_left_w_dongle"]
+
+[tasks.build-eyelash_corne_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-basic",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+
+[tasks.objcopy-eyelash_corne_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-basic",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_corne_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_corne_dongle"]
+
+[tasks.uf2-eyelash_corne_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_corne_dongle.hex",
+  "--output-path",
+  "eyelash_corne_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_corne_dongle"]
+
+[tasks.build-eyelash_corne_zdd_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+
+[tasks.objcopy-eyelash_corne_zdd_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_corne_zdd_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_corne_zdd_dongle"]
+
+[tasks.uf2-eyelash_corne_zdd_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_corne_zdd_dongle.hex",
+  "--output-path",
+  "eyelash_corne_zdd_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_corne_zdd_dongle"]
+
+[tasks.build-sofle_left]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-sofle_left]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "sofle_left.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-sofle_left"]
+
+[tasks.uf2-sofle_left]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "sofle_left.hex",
+  "--output-path",
+  "sofle_left.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-sofle_left"]
+
+[tasks.build-sofle_right]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "peripheral",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-sofle_right]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "peripheral",
+  "--",
+  "-O",
+  "ihex",
+  "sofle_right.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-sofle_right"]
+
+[tasks.uf2-sofle_right]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "sofle_right.hex",
+  "--output-path",
+  "sofle_right.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-sofle_right"]
+
+[tasks.build-sofle_left_w_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-sofle_left_w_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "sofle_left_w_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-sofle_left_w_dongle"]
+
+[tasks.uf2-sofle_left_w_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "sofle_left_w_dongle.hex",
+  "--output-path",
+  "sofle_left_w_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-sofle_left_w_dongle"]
+
+[tasks.build-sofle_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-basic",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+
+[tasks.objcopy-sofle_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-basic",
+  "--",
+  "-O",
+  "ihex",
+  "sofle_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-sofle_dongle"]
+
+[tasks.uf2-sofle_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "sofle_dongle.hex",
+  "--output-path",
+  "sofle_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-sofle_dongle"]
+
+[tasks.build-sofle_zdd_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+
+[tasks.objcopy-sofle_zdd_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+  "--",
+  "-O",
+  "ihex",
+  "sofle_zdd_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-sofle_zdd_dongle"]
+
+[tasks.uf2-sofle_zdd_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "sofle_zdd_dongle.hex",
+  "--output-path",
+  "sofle_zdd_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-sofle_zdd_dongle"]
+
+[tasks.build-eyelash_sofle_left]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-eyelash_sofle_left]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_sofle_left.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_sofle_left"]
+
+[tasks.uf2-eyelash_sofle_left]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_sofle_left.hex",
+  "--output-path",
+  "eyelash_sofle_left.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_sofle_left"]
+
+[tasks.build-eyelash_sofle_right]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "peripheral",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-eyelash_sofle_right]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "peripheral",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_sofle_right.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_sofle_right"]
+
+[tasks.uf2-eyelash_sofle_right]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_sofle_right.hex",
+  "--output-path",
+  "eyelash_sofle_right.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_sofle_right"]
+
+[tasks.build-eyelash_sofle_left_w_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-eyelash_sofle_left_w_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_sofle_left_w_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_sofle_left_w_dongle"]
+
+[tasks.uf2-eyelash_sofle_left_w_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_sofle_left_w_dongle.hex",
+  "--output-path",
+  "eyelash_sofle_left_w_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_sofle_left_w_dongle"]
+
+[tasks.build-eyelash_sofle_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-basic",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+
+[tasks.objcopy-eyelash_sofle_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-basic",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_sofle_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_sofle_dongle"]
+
+[tasks.uf2-eyelash_sofle_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_sofle_dongle.hex",
+  "--output-path",
+  "eyelash_sofle_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_sofle_dongle"]
+
+[tasks.build-eyelash_sofle_zdd_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+
+[tasks.objcopy-eyelash_sofle_zdd_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_sofle_zdd_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_sofle_zdd_dongle"]
+
+[tasks.uf2-eyelash_sofle_zdd_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_sofle_zdd_dongle.hex",
+  "--output-path",
+  "eyelash_sofle_zdd_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_sofle_zdd_dongle"]
+
+[tasks.build-delta_omega_left]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-delta_omega_left]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "delta_omega_left.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-delta_omega_left"]
+
+[tasks.uf2-delta_omega_left]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "delta_omega_left.hex",
+  "--output-path",
+  "delta_omega_left.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-delta_omega_left"]
+
+[tasks.build-delta_omega_right]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "peripheral",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-delta_omega_right]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "peripheral",
+  "--",
+  "-O",
+  "ihex",
+  "delta_omega_right.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-delta_omega_right"]
+
+[tasks.uf2-delta_omega_right]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "delta_omega_right.hex",
+  "--output-path",
+  "delta_omega_right.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-delta_omega_right"]
+
+[tasks.build-delta_omega_left_w_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-delta_omega_left_w_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "delta_omega_left_w_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-delta_omega_left_w_dongle"]
+
+[tasks.uf2-delta_omega_left_w_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "delta_omega_left_w_dongle.hex",
+  "--output-path",
+  "delta_omega_left_w_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-delta_omega_left_w_dongle"]
+
+[tasks.build-delta_omega_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-basic",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+
+[tasks.objcopy-delta_omega_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-basic",
+  "--",
+  "-O",
+  "ihex",
+  "delta_omega_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-delta_omega_dongle"]
+
+[tasks.uf2-delta_omega_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "delta_omega_dongle.hex",
+  "--output-path",
+  "delta_omega_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-delta_omega_dongle"]
+
+[tasks.build-delta_omega_zdd_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+
+[tasks.objcopy-delta_omega_zdd_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+  "--",
+  "-O",
+  "ihex",
+  "delta_omega_zdd_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-delta_omega_zdd_dongle"]
+
+[tasks.uf2-delta_omega_zdd_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "delta_omega_zdd_dongle.hex",
+  "--output-path",
+  "delta_omega_zdd_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-delta_omega_zdd_dongle"]
+
+[tasks.build-cornix_left]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-cornix_left]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "cornix_left.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-cornix_left"]
+
+[tasks.uf2-cornix_left]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "cornix_left.hex",
+  "--output-path",
+  "cornix_left.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-cornix_left"]
+
+[tasks.build-cornix_right]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "peripheral",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-cornix_right]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "peripheral",
+  "--",
+  "-O",
+  "ihex",
+  "cornix_right.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-cornix_right"]
+
+[tasks.uf2-cornix_right]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "cornix_right.hex",
+  "--output-path",
+  "cornix_right.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-cornix_right"]
+
+[tasks.build-cornix_left_w_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "central",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+
+[tasks.objcopy-cornix_left_w_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "central",
+  "--",
+  "-O",
+  "ihex",
+  "cornix_left_w_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/keyboard/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/keyboard.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-cornix_left_w_dongle"]
+
+[tasks.uf2-cornix_left_w_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "cornix_left_w_dongle.hex",
+  "--output-path",
+  "cornix_left_w_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-cornix_left_w_dongle"]
+
+[tasks.build-cornix_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-basic",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+
+[tasks.objcopy-cornix_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-basic",
+  "--",
+  "-O",
+  "ihex",
+  "cornix_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/basic/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_basic.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-cornix_dongle"]
+
+[tasks.uf2-cornix_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "cornix_dongle.hex",
+  "--output-path",
+  "cornix_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-cornix_dongle"]
+
+[tasks.build-cornix_zdd_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+
+[tasks.objcopy-cornix_zdd_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-zdd",
+  "--",
+  "-O",
+  "ihex",
+  "cornix_zdd_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/zdd/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_zdd.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-cornix_zdd_dongle"]
+
+[tasks.uf2-cornix_zdd_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "cornix_zdd_dongle.hex",
+  "--output-path",
+  "cornix_zdd_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-cornix_zdd_dongle"]
+
+[tasks.build-reset_nice_nano_v2]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "reset",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/reset/nice_nano_v2.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/reset.json" }
+
+[tasks.objcopy-reset_nice_nano_v2]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "reset",
+  "--",
+  "-O",
+  "ihex",
+  "reset_nice_nano_v2.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/reset/nice_nano_v2.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/reset.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-reset_nice_nano_v2"]
+
+[tasks.uf2-reset_nice_nano_v2]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "reset_nice_nano_v2.hex",
+  "--output-path",
+  "reset_nice_nano_v2.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-reset_nice_nano_v2"]
+
+[tasks.build-reset_seeeduino_xiao_ble]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "reset",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/reset/seeeduino_xiao_ble.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/reset.json" }
+
+[tasks.objcopy-reset_seeeduino_xiao_ble]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "reset",
+  "--",
+  "-O",
+  "ihex",
+  "reset_seeeduino_xiao_ble.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/reset/seeeduino_xiao_ble.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/reset.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-reset_seeeduino_xiao_ble"]
+
+[tasks.uf2-reset_seeeduino_xiao_ble]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "reset_seeeduino_xiao_ble.hex",
+  "--output-path",
+  "reset_seeeduino_xiao_ble.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-reset_seeeduino_xiao_ble"]
+
+[tasks.build-totem_prospector_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+
+[tasks.objcopy-totem_prospector_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "totem_prospector_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/totem.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-totem_prospector_dongle"]
+
+[tasks.uf2-totem_prospector_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "totem_prospector_dongle.hex",
+  "--output-path",
+  "totem_prospector_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-totem_prospector_dongle"]
+
+[tasks.build-urchin_prospector_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+
+[tasks.objcopy-urchin_prospector_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "urchin_prospector_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/urchin.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-urchin_prospector_dongle"]
+
+[tasks.uf2-urchin_prospector_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "urchin_prospector_dongle.hex",
+  "--output-path",
+  "urchin_prospector_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-urchin_prospector_dongle"]
+
+[tasks.build-corne_prospector_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+
+[tasks.objcopy-corne_prospector_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "corne_prospector_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-corne_prospector_dongle"]
+
+[tasks.uf2-corne_prospector_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "corne_prospector_dongle.hex",
+  "--output-path",
+  "corne_prospector_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-corne_prospector_dongle"]
+
+[tasks.build-eyelash_corne_prospector_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+
+[tasks.objcopy-eyelash_corne_prospector_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_corne_prospector_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/eyelash_corne.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_corne_prospector_dongle"]
+
+[tasks.uf2-eyelash_corne_prospector_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_corne_prospector_dongle.hex",
+  "--output-path",
+  "eyelash_corne_prospector_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_corne_prospector_dongle"]
+
+[tasks.build-sofle_prospector_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+
+[tasks.objcopy-sofle_prospector_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "sofle_prospector_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-sofle_prospector_dongle"]
+
+[tasks.uf2-sofle_prospector_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "sofle_prospector_dongle.hex",
+  "--output-path",
+  "sofle_prospector_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-sofle_prospector_dongle"]
+
+[tasks.build-eyelash_sofle_prospector_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+
+[tasks.objcopy-eyelash_sofle_prospector_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "eyelash_sofle_prospector_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/eyelash_sofle.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-eyelash_sofle_prospector_dongle"]
+
+[tasks.uf2-eyelash_sofle_prospector_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "eyelash_sofle_prospector_dongle.hex",
+  "--output-path",
+  "eyelash_sofle_prospector_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-eyelash_sofle_prospector_dongle"]
+
+[tasks.build-delta_omega_prospector_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+
+[tasks.objcopy-delta_omega_prospector_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "delta_omega_prospector_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/delta_omega.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-delta_omega_prospector_dongle"]
+
+[tasks.uf2-delta_omega_prospector_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "delta_omega_prospector_dongle.hex",
+  "--output-path",
+  "delta_omega_prospector_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-delta_omega_prospector_dongle"]
+
+[tasks.build-cornix_prospector_dongle]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+
+[tasks.objcopy-cornix_prospector_dongle]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "dongle-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "cornix_prospector_dongle.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/dongle/prospector/cornix.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/dongle_prospector.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-cornix_prospector_dongle"]
+
+[tasks.uf2-cornix_prospector_dongle]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "cornix_prospector_dongle.hex",
+  "--output-path",
+  "cornix_prospector_dongle.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-cornix_prospector_dongle"]
+
+[tasks.build-prospector_scanner]
+command = "cargo"
+args = [
+  "build",
+  "--release",
+  "--bin",
+  "scanner-prospector",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/scanner/prospector_scanner.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/scanner.json" }
+
+[tasks.objcopy-prospector_scanner]
+command = "cargo"
+args = [
+  "objcopy",
+  "--release",
+  "--bin",
+  "scanner-prospector",
+  "--",
+  "-O",
+  "ihex",
+  "prospector_scanner.hex",
+]
+env = { KEYBOARD_TOML_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/scanner/prospector_scanner.toml", VIAL_JSON_PATH = "${CARGO_MAKE_WORKING_DIRECTORY}/profiles/vial/scanner.json" }
+dependencies = ["install-llvm-tools", "flip-link", "install-cargo-binutils", "build-prospector_scanner"]
+
+[tasks.uf2-prospector_scanner]
+command = "cargo"
+args = [
+  "hex-to-uf2",
+  "--input-path",
+  "prospector_scanner.hex",
+  "--output-path",
+  "prospector_scanner.uf2",
+  "--family",
+  "nrf52840",
+]
+dependencies = ["install-hex-to-uf2", "objcopy-prospector_scanner"]
+
+[tasks.build-matrix]
+dependencies = [
+  "build-totem_left",
+  "build-totem_right",
+  "build-totem_left_w_dongle",
+  "build-totem_dongle",
+  "build-totem_zdd_dongle",
+  "build-urchin_left",
+  "build-urchin_right",
+  "build-urchin_left_w_dongle",
+  "build-urchin_dongle",
+  "build-urchin_zdd_dongle",
+  "build-corne_left",
+  "build-corne_right",
+  "build-corne_left_w_dongle",
+  "build-corne_dongle",
+  "build-corne_zdd_dongle",
+  "build-eyelash_corne_left",
+  "build-eyelash_corne_right",
+  "build-eyelash_corne_left_w_dongle",
+  "build-eyelash_corne_dongle",
+  "build-eyelash_corne_zdd_dongle",
+  "build-sofle_left",
+  "build-sofle_right",
+  "build-sofle_left_w_dongle",
+  "build-sofle_dongle",
+  "build-sofle_zdd_dongle",
+  "build-eyelash_sofle_left",
+  "build-eyelash_sofle_right",
+  "build-eyelash_sofle_left_w_dongle",
+  "build-eyelash_sofle_dongle",
+  "build-eyelash_sofle_zdd_dongle",
+  "build-delta_omega_left",
+  "build-delta_omega_right",
+  "build-delta_omega_left_w_dongle",
+  "build-delta_omega_dongle",
+  "build-delta_omega_zdd_dongle",
+  "build-cornix_left",
+  "build-cornix_right",
+  "build-cornix_left_w_dongle",
+  "build-cornix_dongle",
+  "build-cornix_zdd_dongle",
+  "build-reset_nice_nano_v2",
+  "build-reset_seeeduino_xiao_ble",
+  "build-totem_prospector_dongle",
+  "build-urchin_prospector_dongle",
+  "build-corne_prospector_dongle",
+  "build-eyelash_corne_prospector_dongle",
+  "build-sofle_prospector_dongle",
+  "build-eyelash_sofle_prospector_dongle",
+  "build-delta_omega_prospector_dongle",
+  "build-cornix_prospector_dongle",
+  "build-prospector_scanner",
+]
 
 [tasks.uf2]
-dependencies = ["uf2-central", "uf2-peripheral"]
+dependencies = [
+  "uf2-totem_left",
+  "uf2-totem_right",
+  "uf2-totem_left_w_dongle",
+  "uf2-totem_dongle",
+  "uf2-totem_zdd_dongle",
+  "uf2-urchin_left",
+  "uf2-urchin_right",
+  "uf2-urchin_left_w_dongle",
+  "uf2-urchin_dongle",
+  "uf2-urchin_zdd_dongle",
+  "uf2-corne_left",
+  "uf2-corne_right",
+  "uf2-corne_left_w_dongle",
+  "uf2-corne_dongle",
+  "uf2-corne_zdd_dongle",
+  "uf2-eyelash_corne_left",
+  "uf2-eyelash_corne_right",
+  "uf2-eyelash_corne_left_w_dongle",
+  "uf2-eyelash_corne_dongle",
+  "uf2-eyelash_corne_zdd_dongle",
+  "uf2-sofle_left",
+  "uf2-sofle_right",
+  "uf2-sofle_left_w_dongle",
+  "uf2-sofle_dongle",
+  "uf2-sofle_zdd_dongle",
+  "uf2-eyelash_sofle_left",
+  "uf2-eyelash_sofle_right",
+  "uf2-eyelash_sofle_left_w_dongle",
+  "uf2-eyelash_sofle_dongle",
+  "uf2-eyelash_sofle_zdd_dongle",
+  "uf2-delta_omega_left",
+  "uf2-delta_omega_right",
+  "uf2-delta_omega_left_w_dongle",
+  "uf2-delta_omega_dongle",
+  "uf2-delta_omega_zdd_dongle",
+  "uf2-cornix_left",
+  "uf2-cornix_right",
+  "uf2-cornix_left_w_dongle",
+  "uf2-cornix_dongle",
+  "uf2-cornix_zdd_dongle",
+  "uf2-reset_nice_nano_v2",
+  "uf2-reset_seeeduino_xiao_ble",
+  "uf2-totem_prospector_dongle",
+  "uf2-urchin_prospector_dongle",
+  "uf2-corne_prospector_dongle",
+  "uf2-eyelash_corne_prospector_dongle",
+  "uf2-sofle_prospector_dongle",
+  "uf2-eyelash_sofle_prospector_dongle",
+  "uf2-delta_omega_prospector_dongle",
+  "uf2-cornix_prospector_dongle",
+  "uf2-prospector_scanner",
+]

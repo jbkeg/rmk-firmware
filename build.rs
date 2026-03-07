@@ -18,11 +18,16 @@ use std::{env, fs};
 use xz2::read::XzEncoder;
 
 fn main() {
-    // Generate vial config at the root of project
-    println!("cargo:rerun-if-changed=vial.json");
-    println!("cargo:rerun-if-changed=keyboard.toml");
+    // Generate vial config from selected profile files
+    let keyboard_toml_path = env::var("KEYBOARD_TOML_PATH").unwrap_or_else(|_| "keyboard.toml".to_string());
+    let vial_json_path = env::var("VIAL_JSON_PATH").unwrap_or_else(|_| "vial.json".to_string());
 
-    generate_vial_config();
+    println!("cargo:rerun-if-env-changed=KEYBOARD_TOML_PATH");
+    println!("cargo:rerun-if-env-changed=VIAL_JSON_PATH");
+    println!("cargo:rerun-if-changed={keyboard_toml_path}");
+    println!("cargo:rerun-if-changed={vial_json_path}");
+
+    generate_vial_config(&vial_json_path);
 
     // Put `memory.x` in our output directory and ensure it's
     // on the linker search path.
@@ -56,18 +61,18 @@ fn main() {
     println!("cargo:rustc-linker=flip-link");
 }
 
-fn generate_vial_config() {
+fn generate_vial_config(vial_json_path: &str) {
     // Generated vial config file
     let out_file = Path::new(&env::var_os("OUT_DIR").unwrap()).join("config_generated.rs");
 
-    let p = Path::new("vial.json");
+    let p = Path::new(vial_json_path);
     let mut content = String::new();
     match File::open(p) {
         Ok(mut file) => {
             file.read_to_string(&mut content)
-                .expect("Cannot read vial.json");
+                .expect("Cannot read VIAL_JSON_PATH file");
         }
-        Err(e) => println!("Cannot find vial.json {:?}: {}", p, e),
+        Err(e) => println!("Cannot find VIAL_JSON_PATH file {:?}: {}", p, e),
     };
 
     let vial_cfg = json::stringify(json::parse(&content).unwrap());
