@@ -33,18 +33,18 @@
 
 ## Milestones (test + commit + push)
 
-1. M0 Scope reset and inventory freeze
-2. M1 Multi-bin build architecture
-3. M2 Continuum canonical core
-4. M3 Keyboard foundation across all families
-5. M4 Keyboard behavior parity pass
-6. M5 Basic dongle role (all families)
-7. M6 ZDD dongle role (all families)
-8. M7 Prospector dongle role (all families)
-9. M8 Prospector scanner role
-10. M9 CI/release matrix parity
-11. M10 Full hardware regression
-12. M11 Release prep and v1 lock
+1. [x] M0 Scope reset and inventory freeze
+2. [x] M1 Multi-bin build architecture
+3. [x] M2 Continuum canonical core
+4. [ ] M3 Keyboard foundation across all families
+5. [ ] M4 Keyboard behavior parity pass
+6. [ ] M5 Basic dongle role (all families)
+7. [ ] M6 ZDD dongle role (all families)
+8. [ ] M7 Prospector dongle role (all families)
+9. [ ] M8 Prospector scanner role
+10. [ ] M9 CI/release matrix parity
+11. [ ] M10 Full hardware regression
+12. [ ] M11 Release prep and v1 lock
 
 ## Assumptions
 

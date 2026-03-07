@@ -1,0 +1,111 @@
+[core]
+slot_order = [
+  "LT4", "LT3", "LT2", "LT1", "LT0",
+  "RT0", "RT1", "RT2", "RT3", "RT4",
+  "LM4", "LM3", "LM2", "LM1", "LM0",
+  "RM0", "RM1", "RM2", "RM3", "RM4",
+  "LB4", "LB3", "LB2", "LB1", "LB0",
+  "RB0", "RB1", "RB2", "RB3", "RB4",
+  "LH1", "LH0", "RH0", "RH1",
+]
+
+layer_order = [
+  "Base",
+  "Extra",
+  "Tap",
+  "Btn",
+  "Sym",
+  "Nav",
+  "Fn",
+  "Mouse",
+  "Num",
+  "Sys",
+  "Game",
+]
+
+[layers]
+Base = [
+  "Q", "W", "E", "R", "T",
+  "Y", "U", "I", "O", "P",
+  "A", "S", "D", "F", "G",
+  "H", "J", "K", "L", "Enter",
+  "Z", "X", "C", "V", "B",
+  "N", "M", "Comma", "Dot", "Slash",
+  "Space", "Tab", "Backspace", "Escape",
+]
+
+Extra = [
+  "Q", "W", "F", "P", "B",
+  "J", "L", "U", "Y", "R",
+  "A", "R", "S", "T", "G",
+  "M", "N", "E", "I", "O",
+  "Z", "X", "C", "D", "V",
+  "K", "H", "Comma", "Dot", "Slash",
+  "Space", "Tab", "Backspace", "Escape",
+]
+
+Tap = "@Base"
+
+Btn = [
+  "LGui", "LAlt", "LShift", "LCtrl", "No",
+  "No", "RCtrl", "RShift", "RAlt", "RGui",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No",
+]
+
+Sym = [
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "Comma", "Dot", "Slash",
+  "No", "No", "No", "No",
+]
+
+Nav = [
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "LGui", "LAlt", "LShift", "LCtrl", "No",
+  "No", "No", "No", "No", "Enter",
+  "No", "No", "No", "No", "No",
+  "No", "Tab", "No", "No", "No",
+  "No", "No", "No", "No",
+]
+
+Fn = [
+  "No", "Kc7", "Kc8", "Kc9", "No",
+  "No", "No", "No", "No", "No",
+  "No", "Kc4", "Kc5", "Kc6", "No",
+  "No", "No", "No", "No", "No",
+  "No", "Kc1", "Kc2", "Kc3", "No",
+  "No", "No", "No", "No", "No",
+  "Kc0", "No", "No", "No",
+]
+
+Mouse = [
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No",
+]
+
+Num = "@Fn"
+
+Sys = [
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No", "No",
+  "No", "No", "No", "No",
+]
+
+Game = "@Base"
