@@ -7,75 +7,86 @@ manufacturer = "RMK"
 chip = "nrf52840"
 
 [layout]
-rows = 4
-cols = 10
+rows = 5
+cols = 14
 layers = 11
 keymap = [
     [
-        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-        ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Enter"],
-        ["Z", "X", "C", "V", "B", "N", "M", "Comma", "Dot", "Slash"],
-        ["No", "No", "Space", "Tab", "No", "No", "Backspace", "Escape", "No", "No"],
+        ["No", "Q", "W", "E", "R", "T", "No", "No", "Y", "U", "I", "O", "P", "No"],
+        ["No", "A", "S", "D", "F", "G", "No", "No", "H", "J", "K", "L", "Enter", "No"],
+        ["No", "Z", "X", "C", "V", "B", "No", "No", "N", "M", "Comma", "Dot", "Slash", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Space", "Tab", "No", "No", "No", "No", "Backspace", "Escape", "No", "No", "No", "No"],
     ],
     [
-        ["Q", "W", "F", "P", "B", "J", "L", "U", "Y", "R"],
-        ["A", "R", "S", "T", "G", "M", "N", "E", "I", "O"],
-        ["Z", "X", "C", "D", "V", "K", "H", "Comma", "Dot", "Slash"],
-        ["No", "No", "Space", "Tab", "No", "No", "Backspace", "Escape", "No", "No"],
+        ["No", "Q", "W", "F", "P", "B", "No", "No", "J", "L", "U", "Y", "R", "No"],
+        ["No", "A", "R", "S", "T", "G", "No", "No", "M", "N", "E", "I", "O", "No"],
+        ["No", "Z", "X", "C", "D", "V", "No", "No", "K", "H", "Comma", "Dot", "Slash", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Space", "Tab", "No", "No", "No", "No", "Backspace", "Escape", "No", "No", "No", "No"],
     ],
     [
-        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-        ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Enter"],
-        ["Z", "X", "C", "V", "B", "N", "M", "Comma", "Dot", "Slash"],
-        ["No", "No", "Space", "Tab", "No", "No", "Backspace", "Escape", "No", "No"],
+        ["No", "Q", "W", "E", "R", "T", "No", "No", "Y", "U", "I", "O", "P", "No"],
+        ["No", "A", "S", "D", "F", "G", "No", "No", "H", "J", "K", "L", "Enter", "No"],
+        ["No", "Z", "X", "C", "V", "B", "No", "No", "N", "M", "Comma", "Dot", "Slash", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Space", "Tab", "No", "No", "No", "No", "Backspace", "Escape", "No", "No", "No", "No"],
     ],
     [
-        ["LGui", "LAlt", "LShift", "LCtrl", "No", "No", "RCtrl", "RShift", "RAlt", "RGui"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "LGui", "LAlt", "LShift", "LCtrl", "No", "No", "No", "No", "RCtrl", "RShift", "RAlt", "RGui", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
     ],
     [
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "Comma", "Dot", "Slash"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "Comma", "Dot", "Slash", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
     ],
     [
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["LGui", "LAlt", "LShift", "LCtrl", "No", "No", "No", "No", "No", "Enter"],
-        ["No", "No", "No", "No", "No", "No", "Tab", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "LGui", "LAlt", "LShift", "LCtrl", "No", "No", "No", "No", "No", "No", "No", "Enter", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "Tab", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
     ],
     [
-        ["No", "Kc7", "Kc8", "Kc9", "No", "No", "No", "No", "No", "No"],
-        ["No", "Kc4", "Kc5", "Kc6", "No", "No", "No", "No", "No", "No"],
-        ["No", "Kc1", "Kc2", "Kc3", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "Kc0", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Kc7", "Kc8", "Kc9", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Kc4", "Kc5", "Kc6", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Kc1", "Kc2", "Kc3", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Kc0", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
     ],
     [
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
     ],
     [
-        ["No", "Kc7", "Kc8", "Kc9", "No", "No", "No", "No", "No", "No"],
-        ["No", "Kc4", "Kc5", "Kc6", "No", "No", "No", "No", "No", "No"],
-        ["No", "Kc1", "Kc2", "Kc3", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "Kc0", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Kc7", "Kc8", "Kc9", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Kc4", "Kc5", "Kc6", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Kc1", "Kc2", "Kc3", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Kc0", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
     ],
     [
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
-        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
     ],
     [
-        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-        ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Enter"],
-        ["Z", "X", "C", "V", "B", "N", "M", "Comma", "Dot", "Slash"],
-        ["No", "No", "Space", "Tab", "No", "No", "Backspace", "Escape", "No", "No"],
+        ["No", "Q", "W", "E", "R", "T", "No", "No", "Y", "U", "I", "O", "P", "No"],
+        ["No", "A", "S", "D", "F", "G", "No", "No", "H", "J", "K", "L", "Enter", "No"],
+        ["No", "Z", "X", "C", "V", "B", "No", "No", "N", "M", "Comma", "Dot", "Slash", "No"],
+        ["No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "No"],
+        ["No", "No", "Space", "Tab", "No", "No", "No", "No", "Backspace", "Escape", "No", "No", "No", "No"],
     ],
 ]
 [ble]
@@ -85,24 +96,24 @@ enabled = true
 connection = "ble"
 
 [split.central]
-rows = 4
-cols = 5
+rows = 5
+cols = 6
 row_offset = 0
 col_offset = 0
 
 [split.central.matrix]
-row_pins = ["P0_29", "P0_02", "P1_15", "P1_13"]
-col_pins = ["P0_31", "P0_30", "P0_14", "P0_16", "P1_04"]
+row_pins = ["P0_19", "P0_08", "P0_12", "P0_11", "P1_09"]
+col_pins = ["P0_03", "P0_28", "P0_30", "P0_21", "P0_23", "P0_22"]
 
 [[split.peripheral]]
-rows = 4
-cols = 5
+rows = 5
+cols = 7
 row_offset = 0
-col_offset = 5
+col_offset = 7
 
 [split.peripheral.matrix]
-row_pins = ["P0_29", "P0_02", "P1_15", "P1_13"]
-col_pins = ["P0_31", "P0_30", "P0_14", "P0_16", "P1_04"]
+row_pins = ["P0_19", "P0_08", "P0_12", "P0_11", "P1_09"]
+col_pins = ["P0_22", "P0_29", "P0_03", "P0_28", "P0_30", "P0_21", "P0_23"]
 
 [host]
 vial_enabled = true

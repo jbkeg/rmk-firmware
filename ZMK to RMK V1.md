@@ -36,7 +36,7 @@
 1. [x] M0 Scope reset and inventory freeze
 2. [x] M1 Multi-bin build architecture
 3. [x] M2 Continuum canonical core
-4. [ ] M3 Keyboard foundation across all families
+4. [x] M3 Keyboard foundation across all families
 5. [ ] M4 Keyboard behavior parity pass
 6. [ ] M5 Basic dongle role (all families)
 7. [ ] M6 ZDD dongle role (all families)
@@ -55,3 +55,8 @@
 - Functional display parity (not pixel-identical)
 - All required hardware is available
 - Minimal RMK patching is allowed only for parity-critical gaps
+
+## Current Notes
+
+- M3 uses ZMK DTS/overlay pin extraction for all keyboard families.
+- `urchin` and `cornix` right-side row wiring in RMK is compile-safe and marked TODO for final hardware-verified mapping.

@@ -91,8 +91,8 @@ row_offset = 0
 col_offset = 0
 
 [split.central.matrix]
-row_pins = ["P0_29", "P0_02", "P1_15", "P1_13"]
-col_pins = ["P0_31", "P0_30", "P0_14", "P0_16", "P1_04"]
+row_pins = ["P1_00", "P0_11", "P1_04", "P1_06"]
+col_pins = ["P1_15", "P1_13", "P1_11", "P0_10", "P0_09"]
 
 [[split.peripheral]]
 rows = 4
@@ -101,8 +101,9 @@ row_offset = 0
 col_offset = 5
 
 [split.peripheral.matrix]
-row_pins = ["P0_29", "P0_02", "P1_15", "P1_13"]
-col_pins = ["P0_31", "P0_30", "P0_14", "P0_16", "P1_04"]
+# TODO(m3): refine right-side row wiring from fully-expanded ZMK DTS.
+row_pins = ["P1_06", "P1_04", "P0_11", "P1_00"]
+col_pins = ["P1_15", "P1_13", "P1_11", "P0_10", "P0_09"]
 
 [host]
 vial_enabled = true
