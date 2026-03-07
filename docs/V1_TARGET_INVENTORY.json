@@ -1,0 +1,352 @@
+[
+  {
+    "shield": "totem_left",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "totem_left",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "totem_right",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "totem_right",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "totem_left_w_dongle",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "totem_left_w_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "totem_dongle",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "totem_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "totem_dongle zdd_adapter dongle_display",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"TOTEM\\ ZDD\\\"",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "totem_zdd_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "urchin_left nice_view_adapter nice_view_gem",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "urchin_left",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "urchin_right nice_view_adapter nice_view_gem",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "urchin_right",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "urchin_left_w_dongle nice_view_adapter nice_view_gem",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "urchin_left_w_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "urchin_dongle",
+    "cmake": "-DCONFIG_ZMK_DISPLAY=n -DCONFIG_DISPLAY=n -DCONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM=n",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "urchin_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "urchin_dongle zdd_adapter dongle_display",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Urchin\\ ZDD\\\"",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "urchin_zdd_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "corne_left nice_view_adapter nice_view",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "corne_left",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "corne_right nice_view_adapter nice_view",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "corne_right",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "corne_left nice_view_adapter nice_view",
+    "cmake": "-DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n",
+    "snippet": "",
+    "artifact": "corne_left_w_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "corne_dongle",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "corne_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "corne_dongle zdd_adapter dongle_display",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Corne\\ ZDD\\\"",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "corne_zdd_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "nice_view",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "eyelash_corne_left",
+    "board": "eyelash_corne_left"
+  },
+  {
+    "shield": "nice_view",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "eyelash_corne_right",
+    "board": "eyelash_corne_right"
+  },
+  {
+    "shield": "nice_view",
+    "cmake": "-DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n",
+    "snippet": "",
+    "artifact": "eyelash_corne_left_w_dongle",
+    "board": "eyelash_corne_left"
+  },
+  {
+    "shield": "eyelash_corne_dongle",
+    "cmake": "-DCONFIG_ZMK_DISPLAY=n -DCONFIG_DISPLAY=n -DCONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM=n",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "eyelash_corne_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "eyelash_corne_dongle zdd_adapter dongle_display",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"EyelashCorneZDD\\\"",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "eyelash_corne_zdd_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "sofle_left nice_view_adapter nice_view",
+    "cmake": "",
+    "snippet": "common-config sofle-sides-config studio-rpc-usb-uart",
+    "artifact": "sofle_left",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "sofle_right nice_view_adapter nice_view",
+    "cmake": "",
+    "snippet": "sofle-sides-config",
+    "artifact": "sofle_right",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "sofle_left nice_view_adapter nice_view",
+    "cmake": "-DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n",
+    "snippet": "sofle-sides-config",
+    "artifact": "sofle_left_w_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "sofle_dongle",
+    "cmake": "-DCONFIG_ZMK_DISPLAY=n -DCONFIG_DISPLAY=n -DCONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM=n",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "sofle_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "sofle_dongle zdd_adapter dongle_display",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Sofle\\ ZDD\\\"",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "sofle_zdd_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "nice_view",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "eyelash_sofle_left",
+    "board": "eyelash_sofle_left"
+  },
+  {
+    "shield": "nice_view",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "eyelash_sofle_right",
+    "board": "eyelash_sofle_right"
+  },
+  {
+    "shield": "nice_view",
+    "cmake": "-DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n",
+    "snippet": "",
+    "artifact": "eyelash_sofle_left_w_dongle",
+    "board": "eyelash_sofle_left"
+  },
+  {
+    "shield": "eyelash_sofle_dongle",
+    "cmake": "-DCONFIG_ZMK_DISPLAY=n -DCONFIG_DISPLAY=n -DCONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM=n",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "eyelash_sofle_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "eyelash_sofle_dongle zdd_adapter dongle_display",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"EyelashSofleZDD\\\"",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "eyelash_sofle_zdd_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "delta_omega_left",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "delta_omega_left",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "delta_omega_right",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "delta_omega_right",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "delta_omega_left_w_dongle",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "delta_omega_left_w_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "delta_omega_dongle",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "delta_omega_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "delta_omega_dongle zdd_adapter dongle_display",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Delta\\ Omega\\ ZDD\\\"",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "delta_omega_zdd_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "cornix_left",
+    "board": "cornix_left"
+  },
+  {
+    "shield": "",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "cornix_right",
+    "board": "cornix_right"
+  },
+  {
+    "shield": "",
+    "cmake": "-DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n",
+    "snippet": "",
+    "artifact": "cornix_left_w_dongle",
+    "board": "cornix_left"
+  },
+  {
+    "shield": "cornix_dongle",
+    "cmake": "",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "cornix_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "cornix_dongle zdd_adapter dongle_display",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Cornix\\ ZDD\\\"",
+    "snippet": "common-config studio-rpc-usb-uart",
+    "artifact": "cornix_zdd_dongle",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "settings_reset",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "reset_nice_nano_v2",
+    "board": "nice_nano_v2"
+  },
+  {
+    "shield": "settings_reset",
+    "cmake": "",
+    "snippet": "",
+    "artifact": "reset_seeeduino_xiao_ble",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "totem_dongle prospector_adapter",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"TOTEM\\ PRSP\\\"",
+    "snippet": "common-config studio-rpc-usb-uart prospector-config",
+    "artifact": "totem_prospector_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "urchin_dongle prospector_adapter",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Urchin\\ PRSP\\\"",
+    "snippet": "common-config studio-rpc-usb-uart prospector-config",
+    "artifact": "urchin_prospector_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "corne_dongle prospector_adapter",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Corne\\ PRSP\\\"",
+    "snippet": "common-config studio-rpc-usb-uart prospector-config",
+    "artifact": "corne_prospector_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "eyelash_corne_dongle prospector_adapter",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"ELCornePRSP\\\"",
+    "snippet": "common-config studio-rpc-usb-uart prospector-config",
+    "artifact": "eyelash_corne_prospector_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "sofle_dongle prospector_adapter",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Sofle\\ PRSP\\\"",
+    "snippet": "common-config studio-rpc-usb-uart prospector-config",
+    "artifact": "sofle_prospector_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "eyelash_sofle_dongle prospector_adapter",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"ELSoflePRSP\\\"",
+    "snippet": "common-config studio-rpc-usb-uart prospector-config",
+    "artifact": "eyelash_sofle_prospector_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "delta_omega_dongle prospector_adapter",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"DeltaOmegaPRSP\\\"",
+    "snippet": "common-config studio-rpc-usb-uart prospector-config",
+    "artifact": "delta_omega_prospector_dongle",
+    "board": "seeeduino_xiao_ble"
+  },
+  {
+    "shield": "cornix_dongle prospector_adapter",
+    "cmake": "-DCONFIG_ZMK_KEYBOARD_NAME=\\\"Cornix\\ PRSP\\\"",
+    "snippet": "common-config studio-rpc-usb-uart prospector-config",
+    "artifact": "cornix_prospector_dongle",
+    "board": "seeeduino_xiao_ble"
+  }
+]
