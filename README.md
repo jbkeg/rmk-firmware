@@ -37,7 +37,7 @@ rmk-firmware/
 │   ├── core/
 │   ├── matrix/
 │   └── generated/
-├── tools/generate_continuum_layers.py
+├── tools/generate_continuum_layers/         # Rust Continuum generator tool
 ├── Makefile.toml                # build matrix and artifact tasks
 ├── docs/
 └── ZMK to RMK V1.md             # v1 plan and milestone status
@@ -82,7 +82,7 @@ Continuum is RMK-native in this repo.
 3. Regenerate family payloads:
 
 ```bash
-python tools/generate_continuum_layers.py
+cargo run --manifest-path tools/generate_continuum_layers/Cargo.toml --target host-tuple --release
 ```
 
 The generator updates `continuum/generated/*.toml` and patches `[layout]` in `profiles/keyboard/*.toml`.

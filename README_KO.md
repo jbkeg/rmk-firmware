@@ -30,7 +30,7 @@ rmk-firmware/
 ├── src/                         # central/peripheral/dongle/scanner/reset bin 엔트리
 ├── profiles/                    # 역할/패밀리별 RMK profile TOML
 ├── continuum/                   # core + matrix + generated
-├── tools/generate_continuum_layers.py
+├── tools/generate_continuum_layers/         # Rust 기반 Continuum 생성기
 ├── Makefile.toml                # 전체 빌드 매트릭스
 ├── docs/
 └── ZMK to RMK V1.md
@@ -73,7 +73,7 @@ cargo make uf2 --release
 3. 생성 스크립트 실행
 
 ```bash
-python tools/generate_continuum_layers.py
+cargo run --manifest-path tools/generate_continuum_layers/Cargo.toml --target host-tuple --release
 ```
 
 생성 결과:

@@ -8,7 +8,7 @@ This document describes day-to-day local development flow for `rmk-firmware`.
 - `profiles/*`: per-role and per-family RMK profiles
 - `src/*`: role entry bins (`central`, `peripheral`, `dongle-*`, `scanner-*`, `reset`)
 - `continuum/*`: canonical shared keymap model
-- `tools/generate_continuum_layers.py`: Continuum generator
+- `tools/generate_continuum_layers/*`: Continuum generator
 
 ## Recommended Workflow
 
@@ -16,7 +16,7 @@ This document describes day-to-day local development flow for `rmk-firmware`.
 2. If Continuum changed, regenerate:
 
 ```bash
-python tools/generate_continuum_layers.py
+cargo run --manifest-path tools/generate_continuum_layers/Cargo.toml --target host-tuple --release
 ```
 
 3. Build the target you changed:

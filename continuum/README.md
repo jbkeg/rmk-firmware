@@ -13,7 +13,7 @@ This directory is the source of truth for Continuum layer payload generation in 
 Run:
 
 ```bash
-python tools/generate_continuum_layers.py
+cargo run --manifest-path tools/generate_continuum_layers/Cargo.toml --target host-tuple --release
 ```
 
 The generator updates:

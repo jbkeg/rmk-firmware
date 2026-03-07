@@ -14,7 +14,7 @@ Continuum keeps one shared behavior/layer model across all keyboard families whi
   - Per-family matrix geometry and slot mapping.
 - `continuum/generated/<family>.toml`
   - Generated family payload output.
-- `tools/generate_continuum_layers.py`
+- `tools/generate_continuum_layers/*`
   - Generator that materializes per-family layout payloads and patches keyboard profiles.
 
 ## Layer Model
@@ -28,7 +28,7 @@ This avoids duplicated per-keyboard behavior definitions.
 Run:
 
 ```bash
-python tools/generate_continuum_layers.py
+cargo run --manifest-path tools/generate_continuum_layers/Cargo.toml --target host-tuple --release
 ```
 
 Generator outputs:

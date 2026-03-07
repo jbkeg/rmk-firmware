@@ -8,7 +8,7 @@ Contributions are welcome for:
 
 - Firmware/runtime sources: `src/*`
 - Target profiles: `profiles/**/*.toml`
-- Continuum core and matrix maps: `continuum/**/*`, `tools/generate_continuum_layers.py`
+- Continuum core and matrix maps: `continuum/**/*`, `tools/generate_continuum_layers/*`
 - Build/release setup: `Makefile.toml`, `.github/workflows/*`
 - Documentation: `README*.md`, `docs/*`
 
@@ -31,7 +31,7 @@ For firmware/profile updates:
 
 For Continuum updates:
 
-- Run `python tools/generate_continuum_layers.py`.
+- Run `cargo run --manifest-path tools/generate_continuum_layers/Cargo.toml --target host-tuple --release`.
 - Confirm generated layout sections are updated in `profiles/keyboard/*.toml`.
 - Rebuild at least one affected keyboard family.
 
